@@ -3,7 +3,7 @@ pipeline {
 
 
                parameters {
-                string(name: 'ID', defaultvalule: '123', description: 'this is a string parameter')
+                string(name: 'ID', defaultvalue: '123', description: 'this is a string parameter')
                 
                }
 
@@ -19,9 +19,9 @@ pipeline {
                                  echo 'testing this application..'
                         }
               }
-                 stage("depoly"){
+                 stage("deploy"){
                                 steps {
-                                        echo 'this applciation is deploying..'
+                                        echo 'this application is deploying..'
                                 }
                  }
   }
