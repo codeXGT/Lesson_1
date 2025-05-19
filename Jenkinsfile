@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'ID', defaultValue: '', description: 'Enter the Jenkins credential ID')
+        string(name: 'ID', defaultValue: '012fe350-f90f-4b2a-887c-ad2d30150e16', description: 'Enter the Jenkins credential ID')
     }
 
     stages {
