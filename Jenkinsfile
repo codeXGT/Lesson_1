@@ -1,29 +1,32 @@
 pipeline {
-               agent any
+    agent any
 
+    parameters {
+        string(name: 'ID', defaultValue: '', description: 'Enter the Jenkins credential ID')
+    }
 
-               parameters {
-                string(name: 'ID', defaultvalue: '', description: 'this is a string parameter')
-                
-               }
+    stages {
+        stage("build") {
+            steps {
+                echo 'building this application...'
+            }
+        }
 
-  stages {
-              stage("build"){
-                       steps {
-                               echo 'building this application..'
+        stage("test") {
+            steps {
+                echo 'testing this application...'
+            }
+        }
 
-                       }
-              }
-              stage("test"){
-                        steps {
-                                 echo 'testing this application..'
-                        }
-              }
-                 stage("deploy"){
-                                steps {
-                                        echo 'this application is deploying..'
-                                }
-                 }
-  }
+        stage("deploy") {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: params.ID, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        echo "Deploying with user: $USERNAME"
+                        // Here, use USERNAME and PASSWORD as needed
+                    }
+                }
+            }
+        }
+    }
 }
-
