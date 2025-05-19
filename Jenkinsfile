@@ -1,5 +1,11 @@
 pipeline {
-               agent any 
+               agent any
+
+
+               parameters {
+                string(name: 'ID', defaultvalule: '123', description: 'this is a string parameter')
+                
+               }
 
   stages {
               stage("build"){
