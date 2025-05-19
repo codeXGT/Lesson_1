@@ -3,7 +3,7 @@ pipeline {
 
 
                parameters {
-                string(name: 'ID', defaultvalue: '123', description: 'this is a string parameter')
+                string(name: 'ID', defaultvalue: 'true', description: 'this is a string parameter')
                 
                }
 
