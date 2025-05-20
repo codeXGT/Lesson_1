@@ -2,9 +2,8 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'ID', defaultValue: '012fe350-f90f-4b2a-887c-ad2d30150e16', description: 'Enter the Jenkins credential ID')
-        boolean(name: 'use-credentails', defaultValue: true, description: 'Use the Jenkins credential ID')
-    
+        string(name: 'CREDENTIAL_ID', defaultValue: '012fe350-f90f-4b2a-887c-ad2d30150e16', description: 'Enter the Jenkins credential ID')
+        boolean(name: 'USE_CREDENTIALS', defaultValue: true, description: 'Use the Jenkins credential ID')
     }
 
     stages {
@@ -23,9 +22,14 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: params.ID, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        echo "Deploying with user: $USERNAME"
-                        // Here, use USERNAME and PASSWORD as needed
+                    if (params.USE_CREDENTIALS) {
+                        withCredentials([usernamePassword(credentialsId: params.CREDENTIAL_ID, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            echo "Deploying with user: $USERNAME"
+                            // Deployment logic here
+                        }
+                    } else {
+                        echo "Skipping credential usage — USE_CREDENTIALS is false"
+                        // Alternative logic here
                     }
                 }
             }
