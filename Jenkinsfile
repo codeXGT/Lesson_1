@@ -9,7 +9,17 @@ pipeline {
     stages {
         stage("build") {
             steps {
-                echo 'building this application...'
+                 script {
+                    if (params.USE_CREDENTIALS) {
+                        withCredentials([usernamePassword(credentialsId: params.CREDENTIAL_ID, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            echo "building with user: $USERNAME"
+                            // Actual building logic here
+                        }
+                    } else {
+                        echo "exiting build due to  credential usage — USE_CREDENTIALS is false"
+                        currentbuild.result= 'ABORTED'
+                        retrun // exists pipeline here
+              
             }
         }
 
@@ -21,16 +31,7 @@ pipeline {
 
         stage("deploy") {
             steps {
-                script {
-                    if (params.USE_CREDENTIALS) {
-                        withCredentials([usernamePassword(credentialsId: params.CREDENTIAL_ID, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                            echo "Deploying with user: $USERNAME"
-                            // Actual deployment logic here
-                        }
-                    } else {
-                        echo "exiting build due to  credential usage — USE_CREDENTIALS is false"
-                        currentbuild.result= 'ABORTED'
-                        retrun // exists pipeline here
+                  echo 'deploying this application...'
                     }
                 }
             }
