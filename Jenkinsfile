@@ -28,7 +28,9 @@ pipeline {
                             // Actual deployment logic here
                         }
                     } else {
-                        echo "Skipping credential usage — USE_CREDENTIALS is false"
+                        echo "exiting build due to  credential usage — USE_CREDENTIALS is false"
+                        currentbuild.result= 'ABORTED'
+                        retrun // exists pipeline here
                     }
                 }
             }
